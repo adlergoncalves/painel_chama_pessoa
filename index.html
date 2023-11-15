@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente</title>
+</head>
+<body>
+    <h1>Chamada de Cliente</h1>
+    <input type="text" id="nome" placeholder="Digite seu nome">
+    <button onclick="enviarNome()">Chamar</button>
+
+    <script>
+        function enviarNome() {
+            var nome = document.getElementById('nome').value;
+            var ws = new WebSocket('ws://localhost:8080');
+
+            // Evento de abertura da conexão WebSocket
+            ws.onopen = function(event) {
+                console.log('Conexão WebSocket aberta:', event);
+                
+                // Enviar o nome para o servidor
+                ws.send(JSON.stringify({ nome: nome }));
+            };
+
+            // Evento de fechamento da conexão WebSocket
+            ws.onclose = function(event) {
+                console.log('Conexão WebSocket fechada:', event);
+            };
+        }
+    </script>
+</body>
+</html>
